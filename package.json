@@ -10,13 +10,15 @@
   },
   "scripts": {
     "start": "node app.js",
-    "register": "node commands.js",
-    "dev": "nodemon app.js"
+    "register": "node --require=dotenv/config src/commands.js",
+    "dev": "nodemon app.js",
+    "deploy": "npx wrangler deploy"
   },
   "author": "Shay DeWael",
   "license": "MIT",
   "dependencies": {
-    "discord-interactions": "^4.0.0",
+    "cheerio": "^1.1.2",
+    "discord-interactions": "^4.4.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2"
   },

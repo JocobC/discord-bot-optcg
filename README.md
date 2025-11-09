@@ -1,20 +1,14 @@
-# Getting Started app for Discord
-
-This project contains a basic rock-paper-scissors-style Discord app written in JavaScript, built for the [getting started guide](https://discord.com/developers/docs/getting-started).
-
-![Demo of app](https://github.com/discord/discord-example-app/raw/main/assets/getting-started-demo.gif?raw=true)
+# Discord bot OPTCG
+Discord app to scrape specific stores for one piece tcg cards.
 
 ## Project structure
 Below is a basic overview of the project structure:
 
 ```
-├── examples    -> short, feature-specific sample apps
+├── code    -> short, feature-specific sample apps
 │   ├── app.js  -> finished app.js code
-│   ├── button.js
-│   ├── command.js
-│   ├── modal.js
-│   ├── selectMenu.js
-├── .env.sample -> sample .env file
+│   ├── commands.js
+│   ├── siteScraper.js
 ├── app.js      -> main entrypoint for app
 ├── commands.js -> slash command payloads + helpers
 ├── game.js     -> logic specific to RPS
