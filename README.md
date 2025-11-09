@@ -1,18 +1,15 @@
 # Discord bot OPTCG
-Discord app to scrape specific stores for one piece tcg cards.
+Discord app to scrape specific stores for one piece tcg cards. Based on discord-example-app
 
 ## Project structure
 Below is a basic overview of the project structure:
 
 ```
-├── code    -> short, feature-specific sample apps
+├── src
 │   ├── app.js  -> finished app.js code
-│   ├── commands.js
-│   ├── siteScraper.js
-├── app.js      -> main entrypoint for app
-├── commands.js -> slash command payloads + helpers
-├── game.js     -> logic specific to RPS
-├── utils.js    -> utility functions and enums
+│   ├── commands.js -> slash command payloads + helpers
+│   ├── scraper.js -> web scraping logic
+|   ├── utils.js    -> utility functions and enums
 ├── package.json
 ├── README.md
 └── .gitignore
@@ -31,17 +28,17 @@ Configuring the app is covered in detail in the [getting started guide](https://
 
 First clone the project:
 ```
-git clone https://github.com/discord/discord-example-app.git
+git clone https://github.com/discord/discord-bot-optcg.git
 ```
 
 Then navigate to its directory and install dependencies:
 ```
-cd discord-example-app
+cd discord-bot-optcg
 npm install
 ```
 ### Get app credentials
 
-Fetch the credentials from your app's settings and add them to a `.env` file (see `.env.sample` for an example). You'll need your app ID (`APP_ID`), bot token (`DISCORD_TOKEN`), and public key (`PUBLIC_KEY`).
+Fetch the credentials from your app's settings and add them to a `.env` file (see `.env.sample` for an example). You'll need your app ID (`DISCORD_APP_ID`), bot token (`DISCORD_TOKEN`), and public key (`DISCORD_PUBLIC_KEY`).
 
 Fetching credentials is covered in detail in the [getting started guide](https://discord.com/developers/docs/getting-started).
 
@@ -57,43 +54,13 @@ npm run register
 
 ### Run the app
 
-After your credentials are added, go ahead and run the app:
+The code is located inside Cloudflare in order to check the added sites hourly
 
-```
-node app.js
-```
+### Commands
 
-> ⚙️ A package [like `nodemon`](https://github.com/remy/nodemon), which watches for local changes and restarts your app, may be helpful while locally developing.
+npm register : send new commands to the linked bot
 
-If you aren't following the [getting started guide](https://discord.com/developers/docs/getting-started), you can move the contents of `examples/app.js` (the finished `app.js` file) to the top-level `app.js`.
-
-### Set up interactivity
-
-The project needs a public endpoint where Discord can send requests. To develop and test locally, you can use something like [`ngrok`](https://ngrok.com/) to tunnel HTTP traffic.
-
-Install ngrok if you haven't already, then start listening on port `3000`:
-
-```
-ngrok http 3000
-```
-
-You should see your connection open:
-
-```
-Tunnel Status                 online
-Version                       2.0/2.0
-Web Interface                 http://127.0.0.1:4040
-Forwarding                    https://1234-someurl.ngrok.io -> localhost:3000
-
-Connections                  ttl     opn     rt1     rt5     p50     p90
-                              0       0       0.00    0.00    0.00    0.00
-```
-
-Copy the forwarding address that starts with `https`, in this case `https://1234-someurl.ngrok.io`, then go to your [app's settings](https://discord.com/developers/applications).
-
-On the **General Information** tab, there will be an **Interactions Endpoint URL**. Paste your ngrok address there, and append `/interactions` to it (`https://1234-someurl.ngrok.io/interactions` in the example).
-
-Click **Save Changes**, and your app should be ready to run 🚀
+npm deploy : deploy code to Cloudflare
 
 ## Other resources
 - Read **[the documentation](https://discord.com/developers/docs/intro)** for in-depth information about API features.

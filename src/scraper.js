@@ -1,5 +1,3 @@
-// Create a new file at src/scraper.js
-
 import { load } from 'cheerio';
 import { DiscordRequest } from './utils.js';
 
@@ -8,7 +6,6 @@ import { DiscordRequest } from './utils.js';
  */
 async function scrapeSite(siteConfig, searchItem) {
   const availableItems = [];
-  // Use encodeURIComponent to safely add the item to a URL
   const url = siteConfig.url_template.replace('{ITEM}', encodeURIComponent(searchItem));
 
   console.log(`Checking ${siteConfig.name} for: ${searchItem}`);
@@ -16,7 +13,6 @@ async function scrapeSite(siteConfig, searchItem) {
   try {
     const headers = { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36' };
     
-    // Use the native fetch() in Cloudflare Workers
     const response = await fetch(url, { headers });
 
     if (!response.ok) {
@@ -37,7 +33,6 @@ async function scrapeSite(siteConfig, searchItem) {
         const title = item.find(siteConfig.title_selector).text().trim();
         const price = item.find(siteConfig.price_selector).text().trim();
         
-        // Simple filter to reduce false positives
         const searchKeywords = searchItem.toLowerCase().split(' ');
         const titleLower = title.toLowerCase();
         
@@ -62,7 +57,6 @@ async function scrapeSite(siteConfig, searchItem) {
 export async function runScraperTask(env) {
   console.log("Running hourly scraper task...");
   
-  // 1. Get config from KV
   const config = await env.SCRAPER_KV.get('CONFIG', 'json') || {};
   const items = await env.SCRAPER_KV.get('ITEMS', 'json') || [];
   const sites = await env.SCRAPER_KV.get('SITES', 'json') || [];
@@ -79,7 +73,6 @@ export async function runScraperTask(env) {
     return;
   }
 
-  // 2. Run the scrapes
   for (const item of items) {
     let resultsDescription = '';
     for (const site of sites) {
@@ -89,17 +82,15 @@ export async function runScraperTask(env) {
         availableItems.forEach(found => {
           resultsDescription += `• **${found.title}** - ${found.price}\n`;
         });
-        resultsDescription += '\n'; // Add space between sites
+        resultsDescription += '\n';
       }
-      // No sleep() needed, requests are async
     }
 
-    // 3. Send results to Discord if anything was found
     if (resultsDescription) {
       const embed = {
         title: `✅ In-Stock Alert: ${item}`,
         description: resultsDescription,
-        color: 0x00FF00, // Green
+        color: 0x00FF00,
         timestamp: new Date().toISOString(),
       };
 
@@ -110,7 +101,7 @@ export async function runScraperTask(env) {
           body: {
             embeds: [embed],
           },
-        });
+        }, env); 
       } catch (err) {
         console.error('Error sending message to Discord:', err);
       }

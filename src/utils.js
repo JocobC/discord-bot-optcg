@@ -1,6 +1,6 @@
 
 export async function DiscordRequest(endpoint, options, env) {
-  const token = process.env.DISCORD_TOKEN;
+  const token = env.DISCORD_TOKEN;
   if (!token) {
     console.error('DISCORD_TOKEN secret is not defined');
     return;

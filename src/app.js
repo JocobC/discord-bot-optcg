@@ -2,7 +2,7 @@ import {
   InteractionType,
   InteractionResponseType,
   InteractionResponseFlags,
-  verifyKey, // We import verifyKey directly
+  verifyKey, 
 } from 'discord-interactions';
 import { DiscordRequest } from './utils.js';
 import { runScraperTask } from './scraper.js';
@@ -39,23 +39,17 @@ async function VerifyRequest(request, env) {
 
 
 export default {
+  /**
+   * This function now ONLY handles HTTP requests (like from Discord)
+   */
   async fetch(request, env, ctx) {
-    // Handle Cron Trigger
-    if (request.cf?.cron) {
-      console.log('Cron trigger received. Starting scraper task.');
-      ctx.waitUntil(runScraperTask(env));
-      return new Response('Cron task started.', { status: 200 });
-    }
-
     const url = new URL(request.url);
 
     // Only respond to POST requests at /interactions
     if (request.method === 'POST' && url.pathname === '/interactions') {
       
-      // Use our new self-contained verification function
       const { isValid, interaction } = await VerifyRequest(request, env);
       
-      // Verification failed
       if (!isValid || !interaction) {
         return new Response('Bad request signature.', { status: 401 });
       }
@@ -171,4 +165,12 @@ export default {
     // Default response for all other requests
     return new Response('Hello! This is the scraper bot. The interaction endpoint is at /interactions', { status: 200 });
   },
+
+  /**
+   * handles cron trigger
+   */
+  async scheduled(event, env, ctx) {
+    console.log('Cron trigger received. Starting scraper task.');
+    ctx.waitUntil(runScraperTask(env));
+  }
 };

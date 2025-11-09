@@ -1,6 +1,6 @@
 import { InstallGlobalCommands } from './utils.js';
 
-// [NEW] Command to set the channel for scraper alerts
+// Command to set the channel for scraper alerts
 export const SCRAPE_SETCHANNEL_COMMAND = {
   name: 'scrape-setchannel',
   description: 'Sets the channel where scraper alerts will be sent.',
@@ -15,7 +15,7 @@ export const SCRAPE_SETCHANNEL_COMMAND = {
   type: 1,
 };
 
-// [NEW] Command to add a card to the search list
+// Command to add a card to the search list
 export const SCRAPE_ADDITEM_COMMAND = {
   name: 'scrape-additem',
   description: 'Adds a TCG card or item to the search list.',
@@ -30,7 +30,7 @@ export const SCRAPE_ADDITEM_COMMAND = {
   type: 1,
 };
 
-// [NEW] Command to remove a card
+// Command to remove a card
 export const SCRAPE_REMOVEITEM_COMMAND = {
   name: 'scrape-removeitem',
   description: 'Removes a card/item from the search list.',
@@ -45,14 +45,14 @@ export const SCRAPE_REMOVEITEM_COMMAND = {
   type: 1,
 };
 
-// [NEW] Command to list all items and sites
+// Command to list all items and sites
 export const SCRAPE_LIST_COMMAND = {
   name: 'scrape-list',
   description: 'Lists all items and sites currently being scraped.',
   type: 1,
 };
 
-// [NEW] Command to add a new site (with all selectors)
+// Command to add a new site (with all selectors)
 export const SCRAPE_ADDSITE_COMMAND = {
   name: 'scrape-addsite',
   description: 'Adds a new website to scrape.',
@@ -67,13 +67,13 @@ export const SCRAPE_ADDSITE_COMMAND = {
   type: 1,
 };
 
-// Add all your new commands to the export
+
 export const ALL_COMMANDS = [
-  SCRAPE_SETCHANNEL_COMMAND, // [NEW]
-  SCRAPE_ADDITEM_COMMAND,    // [NEW]
-  SCRAPE_REMOVEITEM_COMMAND, // [NEW]
-  SCRAPE_LIST_COMMAND,       // [NEW]
-  SCRAPE_ADDSITE_COMMAND,    // [NEW]
+  SCRAPE_SETCHANNEL_COMMAND,
+  SCRAPE_ADDITEM_COMMAND,
+  SCRAPE_REMOVEITEM_COMMAND,
+  SCRAPE_LIST_COMMAND,
+  SCRAPE_ADDSITE_COMMAND,
 ];
 
 InstallGlobalCommands(process.env.DISCORD_APP_ID, ALL_COMMANDS);
